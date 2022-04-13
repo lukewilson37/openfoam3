@@ -1,0 +1,24 @@
+%% COE 347 openfoam3
+% wallanalysis
+
+% import Nx2 data
+entrywall_p = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/entryWall_p_T.xy');
+entrywall_U = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/entryWall_U.xy');
+stepvertical_p = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/stepVertical_p_T.xy');
+stepvertical_U = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/stepHorizontal_U.xy');
+stephorizontal_p = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/stepHorizontal_p_T.xy');
+stephorizontal_U  = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/stepHorizontal_U.xy');
+topwall_p  = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/topWall_p_T.xy');
+topwall_U  = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/topWall_U.xy');
+
+figure(1)
+plot(entrywall_p(:,1),entrywall_p(:,4))
+title("Entry Wall Pressure Distribution")
+xlabel('x')
+ylabel('p')
+
+figure(2)
+plot(stepvertical_p(:,2),stepvertical_p(:,4))
+title("Step Vertical Wall Pressure Distribution")
+xlabel('y')
+ylabel('p')
