@@ -1,0 +1,6 @@
+/work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/current/mach-3-wind-tunnel-with-step-Nx8_2
+Tue Apr 12 22:23:04 CDT 2022
+Running blockMesh on /work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/current/mach-3-wind-tunnel-with-step-Nx8_2
+Running checkMesh on /work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/current/mach-3-wind-tunnel-with-step-Nx8_2
+Running rhoCentralFoam on /work2/07658/ig7235/stampede2/mainclassrepo/OpenFOAM/current/mach-3-wind-tunnel-with-step-Nx8_2
+Wed Apr 13 08:35:14 CDT 2022
