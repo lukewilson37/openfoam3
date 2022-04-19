@@ -1,0 +1,294 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>wallanalysis</title><meta name="generator" content="MATLAB 9.11"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2022-04-19"><meta name="DC.source" content="wallanalysis.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">COE 347 openfoam3</a></li><li><a href="#2">import Nx2 data</a></li><li><a href="#3">Import Nx4 Data</a></li><li><a href="#4">Import Nx8 Data</a></li></ul></div><h2 id="1">COE 347 openfoam3</h2><p>wallanalysis</p><pre class="codeinput">cd(<span class="string">'/Users/lukewilson/OneDrive/Sp22/coe347/openfoam3/openfoam3'</span>)
+</pre><h2 id="2">import Nx2 data</h2><pre class="codeinput">entrywall_p = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/entryWall_p_T.xy'</span>);
+entrywall_U = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/entryWall_U.xy'</span>);
+stepvertical_p = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/stepVertical_p_T.xy'</span>);
+stepvertical_U = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/stepHorizontal_U.xy'</span>);
+stephorizontal_p = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/stepHorizontal_p_T.xy'</span>);
+stephorizontal_U  = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/stepHorizontal_U.xy'</span>);
+topwall_p  = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/topWall_p_T.xy'</span>);
+topwall_U  = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/topWall_U.xy'</span>);
+
+figure(1)
+plot(entrywall_p(:,1),entrywall_p(:,4))
+title(<span class="string">"Entry Wall Pressure Distribution"</span>)
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'p'</span>)
+hold <span class="string">on</span>
+
+figure(2)
+plot(stepvertical_p(:,2),stepvertical_p(:,4))
+title(<span class="string">"Step Vertical Wall Pressure Distribution"</span>)
+xlabel(<span class="string">'y'</span>)
+ylabel(<span class="string">'p'</span>)
+hold <span class="string">on</span>
+
+figure(3)
+plot(stephorizontal_p(:,1),stephorizontal_p(:,4))
+title(<span class="string">"Step Horizontal Wall Pressure Distribution"</span>)
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'p'</span>)
+hold <span class="string">on</span>
+
+figure(4)
+plot(topwall_p(:,1),topwall_p(:,4))
+title(<span class="string">"Top Wall Pressure Distribution"</span>)
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'p'</span>)
+hold <span class="string">on</span>
+</pre><img vspace="5" hspace="5" src="wallanalysis_01.png" alt=""> <img vspace="5" hspace="5" src="wallanalysis_02.png" alt=""> <img vspace="5" hspace="5" src="wallanalysis_03.png" alt=""> <img vspace="5" hspace="5" src="wallanalysis_04.png" alt=""> <h2 id="3">Import Nx4 Data</h2><pre class="codeinput">entrywall_p = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/entryWall_p_T.xy'</span>);
+entrywall_U = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/entryWall_U.xy'</span>);
+stepvertical_p = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/stepVertical_p_T.xy'</span>);
+stepvertical_U = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/stepHorizontal_U.xy'</span>);
+stephorizontal_p = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/stepHorizontal_p_T.xy'</span>);
+stephorizontal_U  = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/stepHorizontal_U.xy'</span>);
+topwall_p  = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/topWall_p_T.xy'</span>);
+topwall_U  = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/topWall_U.xy'</span>);
+
+figure(1)
+plot(entrywall_p(:,1),entrywall_p(:,4))
+title(<span class="string">"Entry Wall Pressure Distribution"</span>)
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'p'</span>)
+
+figure(2)
+plot(stepvertical_p(:,2),stepvertical_p(:,4))
+title(<span class="string">"Step Vertical Wall Pressure Distribution"</span>)
+xlabel(<span class="string">'y'</span>)
+ylabel(<span class="string">'p'</span>)
+
+figure(3)
+plot(stephorizontal_p(:,1),stephorizontal_p(:,4))
+title(<span class="string">"Step Horizontal Wall Pressure Distribution"</span>)
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'p'</span>)
+
+figure(4)
+plot(topwall_p(:,1),topwall_p(:,4))
+title(<span class="string">"Top Wall Pressure Distribution"</span>)
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'p'</span>)
+</pre><img vspace="5" hspace="5" src="wallanalysis_05.png" alt=""> <img vspace="5" hspace="5" src="wallanalysis_06.png" alt=""> <img vspace="5" hspace="5" src="wallanalysis_07.png" alt=""> <img vspace="5" hspace="5" src="wallanalysis_08.png" alt=""> <h2 id="4">Import Nx8 Data</h2><pre class="codeinput">entrywall_p = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/entryWall_p_T.xy'</span>);
+entrywall_U = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/entryWall_U.xy'</span>);
+stepvertical_p = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/stepVertical_p_T.xy'</span>);
+stepvertical_U = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/stepHorizontal_U.xy'</span>);
+stephorizontal_p = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/stepHorizontal_p_T.xy'</span>);
+stephorizontal_U  = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/stepHorizontal_U.xy'</span>);
+topwall_p  = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/topWall_p_T.xy'</span>);
+topwall_U  = importdata(<span class="string">'Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/topWall_U.xy'</span>);
+
+figure(1)
+plot(entrywall_p(:,1),entrywall_p(:,4))
+title(<span class="string">"Entry Wall Pressure Distribution"</span>)
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'p'</span>)
+legend(<span class="string">'Nx2'</span>,<span class="string">'Nx4'</span>,<span class="string">'Nx8'</span>)
+
+figure(2)
+plot(stepvertical_p(:,2),stepvertical_p(:,4))
+title(<span class="string">"Step Vertical Wall Pressure Distribution"</span>)
+xlabel(<span class="string">'y'</span>)
+ylabel(<span class="string">'p'</span>)
+legend(<span class="string">'Nx2'</span>,<span class="string">'Nx4'</span>,<span class="string">'Nx8'</span>)
+
+figure(3)
+plot(stephorizontal_p(:,1),stephorizontal_p(:,4))
+title(<span class="string">"Step Horizontal Wall Pressure Distribution"</span>)
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'p'</span>)
+legend(<span class="string">'Nx2'</span>,<span class="string">'Nx4'</span>,<span class="string">'Nx8'</span>)
+
+figure(4)
+plot(topwall_p(:,1),topwall_p(:,4))
+title(<span class="string">"Top Wall Pressure Distribution"</span>)
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'p'</span>)
+legend(<span class="string">'Nx2'</span>,<span class="string">'Nx4'</span>,<span class="string">'Nx8'</span>)
+</pre><img vspace="5" hspace="5" src="wallanalysis_09.png" alt=""> <img vspace="5" hspace="5" src="wallanalysis_10.png" alt=""> <img vspace="5" hspace="5" src="wallanalysis_11.png" alt=""> <img vspace="5" hspace="5" src="wallanalysis_12.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2021b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% COE 347 openfoam3
+% wallanalysis
+cd('/Users/lukewilson/OneDrive/Sp22/coe347/openfoam3/openfoam3')
+%% import Nx2 data
+entrywall_p = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/entryWall_p_T.xy');
+entrywall_U = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/entryWall_U.xy');
+stepvertical_p = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/stepVertical_p_T.xy');
+stepvertical_U = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/stepHorizontal_U.xy');
+stephorizontal_p = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/stepHorizontal_p_T.xy');
+stephorizontal_U  = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/stepHorizontal_U.xy');
+topwall_p  = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/topWall_p_T.xy');
+topwall_U  = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx2/postProcessing/singleGraph/4/topWall_U.xy');
+
+figure(1)
+plot(entrywall_p(:,1),entrywall_p(:,4))
+title("Entry Wall Pressure Distribution")
+xlabel('x')
+ylabel('p')
+hold on
+
+figure(2)
+plot(stepvertical_p(:,2),stepvertical_p(:,4))
+title("Step Vertical Wall Pressure Distribution")
+xlabel('y')
+ylabel('p')
+hold on
+
+figure(3)
+plot(stephorizontal_p(:,1),stephorizontal_p(:,4))
+title("Step Horizontal Wall Pressure Distribution")
+xlabel('x')
+ylabel('p')
+hold on
+
+figure(4)
+plot(topwall_p(:,1),topwall_p(:,4))
+title("Top Wall Pressure Distribution")
+xlabel('x')
+ylabel('p')
+hold on
+
+
+%% Import Nx4 Data
+
+entrywall_p = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/entryWall_p_T.xy');
+entrywall_U = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/entryWall_U.xy');
+stepvertical_p = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/stepVertical_p_T.xy');
+stepvertical_U = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/stepHorizontal_U.xy');
+stephorizontal_p = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/stepHorizontal_p_T.xy');
+stephorizontal_U  = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/stepHorizontal_U.xy');
+topwall_p  = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/topWall_p_T.xy');
+topwall_U  = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx4/postProcessing/singleGraph/4/topWall_U.xy');
+
+figure(1)
+plot(entrywall_p(:,1),entrywall_p(:,4))
+title("Entry Wall Pressure Distribution")
+xlabel('x')
+ylabel('p')
+
+figure(2)
+plot(stepvertical_p(:,2),stepvertical_p(:,4))
+title("Step Vertical Wall Pressure Distribution")
+xlabel('y')
+ylabel('p')
+
+figure(3)
+plot(stephorizontal_p(:,1),stephorizontal_p(:,4))
+title("Step Horizontal Wall Pressure Distribution")
+xlabel('x')
+ylabel('p')
+
+figure(4)
+plot(topwall_p(:,1),topwall_p(:,4))
+title("Top Wall Pressure Distribution")
+xlabel('x')
+ylabel('p')
+
+%% Import Nx8 Data
+
+entrywall_p = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/entryWall_p_T.xy');
+entrywall_U = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/entryWall_U.xy');
+stepvertical_p = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/stepVertical_p_T.xy');
+stepvertical_U = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/stepHorizontal_U.xy');
+stephorizontal_p = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/stepHorizontal_p_T.xy');
+stephorizontal_U  = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/stepHorizontal_U.xy');
+topwall_p  = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/topWall_p_T.xy');
+topwall_U  = importdata('Convergence/mach-3-wind-tunnel-with-step-Nx8_2/postProcessing/singleGraph/4/topWall_U.xy');
+
+figure(1)
+plot(entrywall_p(:,1),entrywall_p(:,4))
+title("Entry Wall Pressure Distribution")
+xlabel('x')
+ylabel('p')
+legend('Nx2','Nx4','Nx8')
+
+figure(2)
+plot(stepvertical_p(:,2),stepvertical_p(:,4))
+title("Step Vertical Wall Pressure Distribution")
+xlabel('y')
+ylabel('p')
+legend('Nx2','Nx4','Nx8')
+
+figure(3)
+plot(stephorizontal_p(:,1),stephorizontal_p(:,4))
+title("Step Horizontal Wall Pressure Distribution")
+xlabel('x')
+ylabel('p')
+legend('Nx2','Nx4','Nx8')
+
+figure(4)
+plot(topwall_p(:,1),topwall_p(:,4))
+title("Top Wall Pressure Distribution")
+xlabel('x')
+ylabel('p')
+legend('Nx2','Nx4','Nx8')
+
+##### SOURCE END #####
+--></body></html>
